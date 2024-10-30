@@ -1,5 +1,6 @@
 package com.pluralsight.dealershipversion2.entity;
 
+import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.*;
 
 import java.util.List;
