@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Car {
+public class Car {
 
     private int vin;
     private int year;
@@ -18,7 +18,6 @@ public abstract class Car {
     private String color;
     private int odometer;
     private double price;
-    private AddsOn addsOn;
 
 
     @Override

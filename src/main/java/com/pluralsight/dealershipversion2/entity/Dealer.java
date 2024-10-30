@@ -1,16 +1,14 @@
 package com.pluralsight.dealershipversion2.entity;
 
+import com.pluralsight.dealershipversion2.entity.Car.AddsOn;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.*;
 
 import java.util.List;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -22,7 +20,8 @@ public class Dealer extends User{
     private String Address;
     private String phone;
     private VehicleInventory inventory;
-    private List<java.lang.Record> recordList;
+    private List<Record> recordList;
+    private List<Contract> contractList;
 
 
 }
