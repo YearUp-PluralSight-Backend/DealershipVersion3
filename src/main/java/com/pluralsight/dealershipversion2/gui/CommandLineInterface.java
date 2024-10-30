@@ -3,6 +3,8 @@ package com.pluralsight.dealershipversion2.gui;
 
 import com.pluralsight.dealershipversion2.entity.Car.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
+import com.pluralsight.dealershipversion2.entity.document.Contract;
+import com.pluralsight.dealershipversion2.entity.document.Record;
 import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
@@ -17,12 +19,16 @@ public class CommandLineInterface {
     private static Dealer dealership;
     private static CommandLineInterface commandLineInterface;
     private static VehicleInventory carInventory;
-    private final List<Car> carList;
+    private List<Car> carList;
+    private List<Record> recordList;
+    private List<Contract> contractList;
 
     private CommandLineInterface(){
         dealership = DealershipFileManager.getDealer();
         carInventory = dealership.getInventory();
-        carList = carInventory.getAllVehicles();
+        this.carList = carInventory.getAllVehicles();
+        this.recordList = dealership.getRecordList();
+        this.contractList = dealership.getContractList();
         homeScreen();
     }
 

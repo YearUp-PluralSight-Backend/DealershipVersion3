@@ -1,6 +1,7 @@
 package com.pluralsight.dealershipversion2.entity;
 
-import com.pluralsight.dealershipversion2.entity.Car.AddsOn;
+import com.pluralsight.dealershipversion2.entity.document.Contract;
+import com.pluralsight.dealershipversion2.entity.document.Record;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.*;
 
