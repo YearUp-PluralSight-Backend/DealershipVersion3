@@ -71,7 +71,6 @@ public class VehicleInventory {
     public void addVehicle(Car vehicle) {
         // Implementation here
         inventory.add(vehicle);
-        DealershipFileManager.updateAndSaveDealership(CommandLineInterface.getDealership());
         totalOfVehicles++;
     }
 
@@ -79,14 +78,12 @@ public class VehicleInventory {
     public boolean removeVehicle(Car vehicle) {
         // Implementation here
         totalOfVehicles--;
-        DealershipFileManager.updateAndSaveDealership(CommandLineInterface.getDealership());
         return inventory.remove(vehicle);
     }
 
     public Car removeVehicleById(int vin) {
         // Implementation here
         totalOfVehicles--;
-        DealershipFileManager.updateAndSaveDealership(CommandLineInterface.getDealership());
         return inventory.remove(vin);
     }
 

@@ -1,6 +1,6 @@
-package com.pluralsight.Dealerversion2.repository;
+package com.pluralsight.dealershipversion2.repository;
 
-import com.pluralsight.Dealer.utils.InputOutput;
+import com.pluralsight.dealershipversion2.utils.InputOutput;
 import com.pluralsight.dealershipversion2.entity.Car.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.io.*;
 import java.util.List;
 
-public class DealerFileManager {
+public class DealershipFileManager {
 
     private static final String FILE_NAME = "inventory.csv";
 
