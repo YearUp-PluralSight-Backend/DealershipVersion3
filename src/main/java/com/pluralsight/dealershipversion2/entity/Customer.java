@@ -7,12 +7,14 @@ import com.pluralsight.dealershipversion2.entity.document.SalesContract;
 import com.pluralsight.dealershipversion2.repository.ContractFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import com.pluralsight.dealershipversion2.utils.InputOutput;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import java.util.List;
 
 /**
  * Represents a customer in the dealership system.
  */
+@EqualsAndHashCode(callSuper = true)
 @Getter
 public class Customer extends User {
 
