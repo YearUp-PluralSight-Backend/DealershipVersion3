@@ -10,21 +10,44 @@ import com.pluralsight.dealershipversion2.utils.InputOutput;
 import lombok.Getter;
 import java.util.List;
 
-
+/**
+ * Represents a customer in the dealership system.
+ */
 @Getter
-public class Customer extends User{
+public class Customer extends User {
 
+    /**
+     * Default constructor for Customer.
+     * Initializes the inventory and contract list for the customer.
+     */
     public Customer() {
         super.setInventory(VehicleInventory.getInstance());
         super.setContractList(ContractFileManager.getContract());
     }
 
+    /**
+     * Constructs a Customer with the specified details.
+     * Initializes the inventory and contract list for the customer.
+     *
+     * @param account  the account identifier for the customer
+     * @param password the password for the customer's account
+     * @param name     the name of the customer
+     * @param address  the address of the customer
+     * @param phone    the phone number of the customer
+     */
     public Customer(String account, String password, String name, String address, String phone) {
         super(account, password, name, address, phone);
         super.setInventory(VehicleInventory.getInstance());
         super.setContractList(ContractFileManager.getContract());
     }
 
+    /**
+     * Facilitates the purchase of a car by the customer from the dealer.
+     *
+     * @param customer the customer purchasing the car
+     * @param dealer   the dealer selling the car
+     * @return the contract for the purchase or lease of the car
+     */
     public Contract purchaseCar(Customer customer, Dealer dealer) {
 
         Contract contract = null;
