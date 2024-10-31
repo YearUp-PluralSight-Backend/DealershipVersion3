@@ -5,11 +5,15 @@ import com.pluralsight.dealershipversion2.entity.Car.Car;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class InputOutput {
 
 
     private static Scanner scanner = new Scanner(System.in);
+
+    private static final Consumer<String> println = System.out::println;
+
     public static void formatOutput(String prompt) {
 
         String info =

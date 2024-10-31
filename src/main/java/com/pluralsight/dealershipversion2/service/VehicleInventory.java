@@ -6,25 +6,41 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class VehicleInventory {
 
-    private final List<Car> inventory = new ArrayList<>();
-    // Optional: Method to get the total number of vehicles
-    // Implementation here
+    private VehicleInventory vehicleInventory;
+    private final List<Optional<Car>> inventory;
     @Getter
     private int totalOfVehicles;
 
+    private VehicleInventory() {
+        this.inventory = new ArrayList<>();
+    }
+
+    public VehicleInventory getInstance() {
+        if (vehicleInventory != null) {
+            return vehicleInventory;
+        }
+        vehicleInventory = new VehicleInventory();
+        return vehicleInventory;
+    }
+
     public List<Car> getVehiclesByPrice(double min, double max) {
-        return inventory.stream()
-                .filter(vehicle -> vehicle.getPrice() >= min && vehicle.getPrice() <= max)
-                .toList();
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get) // Get the Car from Optional
+                .filter(car -> car.getPrice() >= min && car.getPrice() <= max) // Filter by price range
+                .toList(); // Collect to list
     }
 
     // Method to get vehicles by make and model
     public List<Car> getVehiclesByMakeModel(String make, String model) {
         // Implementation here
-        return inventory.stream()
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .filter(vehicle -> vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model))
                 .toList();
     }
@@ -32,7 +48,9 @@ public class VehicleInventory {
     // Method to get vehicles by year range
     public List<Car> getVehiclesByYear(int min, int max) {
         // Implementation here
-        return inventory.stream()
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .filter(vehicle -> vehicle.getYear() >= min && vehicle.getYear() <= max)
                 .toList();
     }
@@ -40,15 +58,20 @@ public class VehicleInventory {
     // Method to get vehicles by color
     public List<Car> getVehiclesByColor(String color) {
         // Implementation here
-        return inventory.stream()
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .filter(vehicle -> vehicle.getColor().equalsIgnoreCase(color))
                 .toList();
     }
 
     // Method to get vehicles by mileage range
-    public List<Car> getVehiclesByMileage(double min, double max) {
+    public List<Car>getVehiclesByMileage(double min, double max) {
         // Implementation here
-        return inventory.stream()
+
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .filter(vehicle -> vehicle.getOdometer() >= min && vehicle.getOdometer() <= max)
                 .toList();
     }
@@ -56,39 +79,47 @@ public class VehicleInventory {
     // Method to get vehicles by type
     public List<Car> getVehiclesByType(String vehicleType) {
         // Implementation here
-        return inventory.stream()
+        return this.inventory.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .filter(vehicle -> vehicle.getVehicleType().equalsIgnoreCase(vehicleType))
                 .toList();
     }
 
     // Method to get all vehicles in inventory
-    public List<Car> getAllVehicles() {
+    public List<Car>  getAllVehicles() {
         // Implementation here
-        return inventory;
+        return this.inventory.stream().filter(Optional::isPresent).map(Optional::get).toList();
     }
 
     // Method to add a vehicle to the inventory
-    public void addVehicle(Car vehicle) {
+    public boolean addVehicle(Car vehicle) {
         // Implementation here
-        inventory.add(vehicle);
         totalOfVehicles++;
+        return this.inventory.add(Optional.of(vehicle));
+
     }
+
+    public Optional<Car> getVehicleById(int id) {
+        return this.inventory.get(id);
+    }
+
 
     // Method to remove a vehicle from the inventory
     public boolean removeVehicle(Car vehicle) {
         // Implementation here
         totalOfVehicles--;
-        return inventory.remove(vehicle);
+        return this.inventory.remove(vehicle);
     }
 
-    public Car removeVehicleById(int vin) {
+    public Optional<Car> removeVehicleById(int vin) {
         // Implementation here
         totalOfVehicles--;
-        return inventory.remove(vin);
+        return this.inventory.remove(vin);
     }
 
     public void setTotalOfVehicles() {
-        this.totalOfVehicles = inventory.size();
+        this.totalOfVehicles = this.inventory.size();
     }
 
 

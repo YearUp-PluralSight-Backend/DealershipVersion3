@@ -1,10 +1,9 @@
 package com.pluralsight.dealershipversion2.gui;
 
-
 import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.Customer;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
-import com.pluralsight.dealershipversion2.entity.document.Record;
 import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
@@ -13,32 +12,30 @@ import java.util.List;
 
 import static com.pluralsight.dealershipversion2.utils.InputOutput.*;
 
-public class CommandLineInterface {
-
+public class CustomerGUI {
     @Getter
     private static Dealer dealership;
-    private static CommandLineInterface commandLineInterface;
+    private static CustomerGUI customerGUI;
+    private static Customer customer;
     private static VehicleInventory carInventory;
     private List<Car> carList;
-    private List<Record> recordList;
     private List<Contract> contractList;
 
-    private CommandLineInterface(){
+    private CustomerGUI(){
+        customer = new Customer();
         dealership = DealershipFileManager.getDealer();
         carInventory = dealership.getInventory();
-        this.carList = carInventory.getAllVehicles();
-        this.recordList = dealership.getRecordList();
-        this.contractList = dealership.getContractList();
+
         homeScreen();
     }
 
-    public static CommandLineInterface getInstance() {
+    public static CustomerGUI getInstance() {
 
-        if(commandLineInterface == null) {
-            commandLineInterface = new CommandLineInterface();
-            return commandLineInterface;
+        if(customerGUI == null) {
+            customerGUI = new CustomerGUI();
+            return customerGUI;
         }
-        return commandLineInterface;
+        return customerGUI;
     }
 
 
@@ -205,6 +202,4 @@ public class CommandLineInterface {
 
 
     }
-
-
 }
