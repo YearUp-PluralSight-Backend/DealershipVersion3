@@ -23,7 +23,7 @@ public abstract class Contract {
     String email;
     @Getter
     @Setter
-    int vin;
+    Car carSold;
     @Setter
     double totalPrice;
     @Setter

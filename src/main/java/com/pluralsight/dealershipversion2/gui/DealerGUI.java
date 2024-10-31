@@ -40,7 +40,7 @@ public class DealerGUI {
     }
 
 
-    private void homeScreen() {
+    public void homeScreen() {
 
         boolean flag = true;
         while (flag) {

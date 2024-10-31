@@ -20,7 +20,7 @@ public class DealershipFileManager {
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
 
             String[] firstLineData = bufferedReader.readLine().trim().split("\\|");
-            dealer = new Dealer(firstLineData[0], firstLineData[1], firstLineData[2], vehicleInventory);
+            dealer = new Dealer("root", "root", firstLineData[0], firstLineData[1], firstLineData[2]);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
 

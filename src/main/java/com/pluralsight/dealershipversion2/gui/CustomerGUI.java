@@ -1,7 +1,7 @@
 package com.pluralsight.dealershipversion2.gui;
 
-import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.Customer;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
 import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
@@ -14,23 +14,22 @@ import static com.pluralsight.dealershipversion2.utils.InputOutput.*;
 
 public class CustomerGUI {
     @Getter
-    private static Dealer dealership;
+    private Dealer dealership;
     private static CustomerGUI customerGUI;
-    private static Customer customer;
+    private Customer customer;
     private static VehicleInventory carInventory;
     private List<Car> carList;
     private List<Contract> contractList;
 
     private CustomerGUI(){
-        customer = new Customer();
         dealership = DealershipFileManager.getDealer();
+        customer = new Customer();
         carInventory = dealership.getInventory();
-
+        carList = customer.getCarList();
         homeScreen();
     }
 
     public static CustomerGUI getInstance() {
-
         if(customerGUI == null) {
             customerGUI = new CustomerGUI();
             return customerGUI;
@@ -39,7 +38,7 @@ public class CustomerGUI {
     }
 
 
-    private void homeScreen() {
+    public void homeScreen() {
 
         boolean flag = true;
         while (flag) {
@@ -48,17 +47,14 @@ public class CustomerGUI {
                 String command = promptForString(" (Dealership) Enter your Option: ").toUpperCase();
                 switch (command) {
                     case "1" -> display();                         // Display all vehicles
-                    case "2" -> processGetByPrice();        // Search by price range
-                    case "3" -> processGetByMakeModel();    // Search by make and model
-                    case "4" -> processGetByYear();         // Search by year
-                    case "5" -> processGetByColor();        // Search by color
-                    case "6" -> processGetByMileage();      // Search by mileage
-                    case "7" -> processGetByVehicleType();  // Search by vehicle type
-                    case "8" -> processGetAllVehicle();    // Display all vehicles
-                    case "9" -> processAddVehicle();        // Add a new vehicle
-                    case "10" -> processRemoveVehicle();     // Remove a vehicle
-                    case "11" -> processRemoveVehicleById();     // Remove a vehicle
-
+                    case "2" -> buyCar();
+                    case "3" -> processGetByPrice();        // Search by price range
+                    case "4" -> processGetByMakeModel();    // Search by make and model
+                    case "5" -> processGetByYear();         // Search by year
+                    case "6" -> processGetByColor();        // Search by color
+                    case "7" -> processGetByMileage();      // Search by mileage
+                    case "8" -> processGetByVehicleType();  // Search by vehicle type
+                    case "9" -> processGetAllVehicle();    // Display all vehicles
                     case "0" -> flag = false;                      // Exit the application
                     default -> System.out.println("Invalid Option. Please choose a number between 0 and 10.\n");
                 }
@@ -74,18 +70,16 @@ public class CustomerGUI {
         String info =
                 """
                 %s|%s|%s
-                Welcome to the Car Dealership Inventory System
+                Welcome to the Customer Dashboard
                 Please select an option:
-                1. Display all vehicles
-                2. Search vehicles by price range
-                3. Search vehicles by make and model
-                4. Search vehicles by year
-                5. Search vehicles by color
+                1. Buy the vehicle based on nin number
+                2. Display all vehicles
+                3. Search vehicles by price range
+                4. Search vehicles by make and model
+                5. Search vehicles by year
+                6. Search vehicles by color
                 6. Search vehicles by mileage
-                7. Search vehicles by vehicle type
-                8. Display all vehicles
-                9. Add a new vehicle to the inventory
-                10. Remove a vehicle from the inventory
+                8. Search vehicles by vehicle type
                 0. Exit
                 """.formatted(dealership.getName(), dealership.getAddress(), dealership.getPhone());
 
@@ -100,6 +94,12 @@ public class CustomerGUI {
         footer(carList);
         printEndingPrompt();
     }
+
+    private void buyCar() {
+        Contract contract = customer.purchaseCar(customer, dealership);
+
+    }
+
 
     public void processGetByPrice(){
         Double min = promptForDouble("Enter the min price: ");
@@ -189,4 +189,5 @@ public class CustomerGUI {
         printEndingPrompt();
 
     }
+
 }

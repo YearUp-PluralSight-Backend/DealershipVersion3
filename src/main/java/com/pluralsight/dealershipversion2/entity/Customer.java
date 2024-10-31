@@ -1,15 +1,16 @@
 package com.pluralsight.dealershipversion2.entity;
 
-import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
 import com.pluralsight.dealershipversion2.entity.document.LeaseContract;
 import com.pluralsight.dealershipversion2.entity.document.SalesContract;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.repository.ContractFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import com.pluralsight.dealershipversion2.utils.InputOutput;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import java.util.List;
+
+import java.util.Optional;
 
 /**
  * Represents a customer in the dealership system.
@@ -57,7 +58,8 @@ public class Customer extends User {
         String date = InputOutput.promptForString("Enter the date: (year month day without spaces): ");
         String name = InputOutput.promptForString("Enter your name: ");
         String email = InputOutput.promptForString("Enter your Email: ");
-        Car car = InputOutput.carObject();
+        int vinNumber = InputOutput.promptForInteger("Enter the vin number: ");
+        Car car = dealer.getInventory().getVehicleById(vinNumber).get();
         customer.getCarList().add(car);
         dealer.getCarList().add(car);
 

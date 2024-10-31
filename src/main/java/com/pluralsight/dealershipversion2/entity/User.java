@@ -42,6 +42,8 @@ public class User {
      * Default constructor for User.
      */
     public User() {
+        this.carList = new ArrayList<>();
+
     }
 
     /**
