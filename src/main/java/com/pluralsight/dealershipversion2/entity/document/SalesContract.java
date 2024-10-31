@@ -1,6 +1,7 @@
 package com.pluralsight.dealershipversion2.entity.document;
 
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
+import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
 
 /**
@@ -18,23 +19,33 @@ public class SalesContract extends Contract {
     @Getter
     private boolean isFinance;
 
+    private Car car;
+
+    private VehicleInventory vehicleInventory;
+
     /**
      * Constructs a SalesContract with the specified details.
      *
      * @param date          the date of the contract
      * @param name          the name of the buyer
      * @param email         the email of the buyer
-     * @param carSold       the car being sold
+     * @param vin       the car being sold
      * @param totalPrice    the total price of the car
      * @param monthlyPayment the monthly payment amount
      * @param isFinance     whether the purchase is financed
      */
-    public SalesContract(String date, String name, String email, Car carSold, double saleTax, double recordingFee, double proceesingFee, double totalPrice, boolean isFinance, double monthlyPayment) {
-        super(date, name, email, carSold, totalPrice, monthlyPayment);
+    public SalesContract(String date, String name, String email, int vin, double saleTax, double recordingFee, double proceesingFee, double totalPrice, boolean isFinance, double monthlyPayment) {
+        super(date, name, email, vin, totalPrice, monthlyPayment);
         this.saleTax = saleTax * 0.05;
         this.recordingFee = 100;
-        this.proceesingFee = carSold.getPrice() > 10000 ? 495 : 295;
+        this.proceesingFee = getCar().getPrice() > 10000 ? 495 : 295;
         this.isFinance = isFinance;
+        vehicleInventory = VehicleInventory.getInstance();
+    }
+
+
+    public Car getCar() {
+        return vehicleInventory.getVehicleById(super.vin).get();
     }
 
     /**
@@ -55,7 +66,7 @@ public class SalesContract extends Contract {
     @Override
     public double getTotalPrice() {
         if (!isFinance) return 0;
-        return carSold.getPrice() >= 10000 ? getMonthlypayment() * 48 + saleTax + recordingFee + proceesingFee: getMonthlypayment() * 24 + saleTax + recordingFee + proceesingFee;
+        return getCar().getPrice() >= 10000 ? getMonthlypayment() * 48 + saleTax + recordingFee + proceesingFee: getMonthlypayment() * 24 + saleTax + recordingFee + proceesingFee;
     }
 
     /**
@@ -75,7 +86,7 @@ public class SalesContract extends Contract {
 
         n = Loan term in months (e.g., for a 5-year loan, n=60)
          */
-        double p = carSold.getPrice();
+        double p = getCar().getPrice();
         double r = p >= 10000 ? 0.045 / 12: 0.0525 / 12;
         double n = p >= 10000 ? 48 : 24;
         monthlyPayment = (p * r) / Math.pow(1 - (1 + r), n);
