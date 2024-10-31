@@ -1,4 +1,4 @@
-package com.pluralsight.dealershipversion2.entity.Car;
+package com.pluralsight.dealershipversion2.entity.vehicle;
 
 public class NitrogenTires implements AddsOn {
 

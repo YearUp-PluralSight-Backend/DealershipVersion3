@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Contract contract = new SalesContract();
+        Contract contract = new SalesContract(false);
         System.out.println(contract.getPrice());
     }
 }

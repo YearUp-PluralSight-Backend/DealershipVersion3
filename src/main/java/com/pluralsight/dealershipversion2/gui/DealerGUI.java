@@ -1,7 +1,7 @@
 package com.pluralsight.dealershipversion2.gui;
 
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
 import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
@@ -9,6 +9,7 @@ import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.pluralsight.dealershipversion2.utils.InputOutput.*;
 
@@ -193,16 +194,13 @@ public class DealerGUI {
     private void processRemoveVehicleById() {
         loadingAnimation();
         int vin = promptForInteger("Enter the vin number: ");
-        Car car = carInventory.removeVehicleById(vin).ifPresentOrElse(() -> {
-            System.out.println("You have successfully removed the car from the inventory.");
-        },
+        Optional<Car> optionalCar = carInventory.removeVehicleById(vin);
+        optionalCar.ifPresentOrElse(car -> {
+                    formatOutput("You have successfully removed the car from the inventory." + car);
+                },
                 () -> {
-
+                    formatOutput("Your VIN number is not correct!");
                 });
-        if (car != null) {
-            formatOutput("Your vin number is not correct!");
-        }
-        formatOutput("You have removed vehicle successfully!");
         printEndingPrompt();
 
 

@@ -1,10 +1,9 @@
 package com.pluralsight.dealershipversion2.repository;
 
 import com.pluralsight.dealershipversion2.utils.InputOutput;
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
-import lombok.Getter;
 
 import java.io.*;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.pluralsight.dealershipversion2.repository;
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
-import com.pluralsight.dealershipversion2.entity.Dealer;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
+import com.pluralsight.dealershipversion2.entity.User;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
 import com.pluralsight.dealershipversion2.entity.document.LeaseContract;
 import com.pluralsight.dealershipversion2.entity.document.SalesContract;
@@ -15,9 +15,8 @@ import java.util.StringTokenizer;
 public class ContractFileManager {
         private static final String FILE_NAME = "inventory.csv";
 
-        public static Dealer getDealer() {
+        public static List<Contract> getContract() {
             List<Contract> contractList = new ArrayList<>();
-            Dealer dealer = dealer = new Dealer(contractList);;
             try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
@@ -30,10 +29,10 @@ public class ContractFileManager {
 
             InputOutput.formatOutput("You have successfully read data from file:  " + FILE_NAME + "\nTotal of Contract is: " + contractList.size());
             contractList.forEach(System.out::println);
-            return dealer;
+            return contractList;
         }
 
-        public static void updateAndSaveDealer(Dealer Dealer, String filename) {
+        public static void updateAndSaveDealer(User Dealer, String filename) {
             List<Contract> contractList = Dealer.getContractList();
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))){
 

@@ -1,10 +1,9 @@
 package com.pluralsight.dealershipversion2.service.commandpattern;
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class UpdateCommand implements Command{
 

@@ -1,6 +1,7 @@
-package com.pluralsight.dealershipversion2.entity.Car;
+package com.pluralsight.dealershipversion2.entity.vehicle;
 
-public class SplashGuards implements AddsOn{
+public class CargoTray implements AddsOn {
+
     /**
      * @param car
      */

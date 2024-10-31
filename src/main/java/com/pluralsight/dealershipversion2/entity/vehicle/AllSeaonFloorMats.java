@@ -1,7 +1,6 @@
-package com.pluralsight.dealershipversion2.entity.Car;
+package com.pluralsight.dealershipversion2.entity.vehicle;
 
-public class CargoTray implements AddsOn {
-
+public class AllSeaonFloorMats implements AddsOn{
     /**
      * @param car
      */

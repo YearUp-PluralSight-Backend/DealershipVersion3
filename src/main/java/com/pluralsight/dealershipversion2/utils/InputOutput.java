@@ -1,7 +1,7 @@
 package com.pluralsight.dealershipversion2.utils;
 
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +25,16 @@ public class InputOutput {
                 """.formatted(prompt);
         System.out.println(info);
     }
+
+    public static boolean promptForBoolean(String prompt) {
+        String value = promptForString(prompt);
+        if (value.equalsIgnoreCase("Yes")) {
+            return true;
+        } else {
+            return  false;
+        }
+    }
+
 
     public static String promptForString(String prompt) {
         System.out.print(prompt);
@@ -143,8 +153,8 @@ public class InputOutput {
     public static Car carObject() {
         int vin = promptForInteger("Enter Vehicle Identification Number (VIN): ");
         int year = promptForInteger("Enter the manufacturing year: ");
-        String make = promptForString("Enter the make: ");
-        String model = promptForString("Enter the model: ");
+        String make = promptForString("Enter the make (e. g., Toyota, Honda): ");
+        String model = promptForString("Enter the model(e. g., Rav4, CR-V: ");
         String vehicleType = promptForString("Enter the vehicle type (e.g., sedan, SUV): ");
         String color = promptForString("Enter the color: ");
         int odometer = promptForInteger("Enter the odometer reading: ");

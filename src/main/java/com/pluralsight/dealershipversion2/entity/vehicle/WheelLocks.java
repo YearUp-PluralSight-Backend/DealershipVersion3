@@ -1,6 +1,6 @@
-package com.pluralsight.dealershipversion2.entity.Car;
+package com.pluralsight.dealershipversion2.entity.vehicle;
 
-public class WindowTinting implements AddsOn{
+public class WheelLocks implements AddsOn{
     /**
      * @param car
      */

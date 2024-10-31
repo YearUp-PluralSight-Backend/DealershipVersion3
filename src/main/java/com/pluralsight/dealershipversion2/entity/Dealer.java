@@ -1,7 +1,8 @@
 package com.pluralsight.dealershipversion2.entity;
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
+import com.pluralsight.dealershipversion2.repository.ContractFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.*;
 
@@ -13,33 +14,15 @@ import lombok.Data;
 @Data
 public class Dealer extends User{
 
-    private VehicleInventory inventory;
+    public Dealer() {
+        super.setInventory(VehicleInventory.getInstance());
+        super.setContractList(ContractFileManager.getContract());
 
-    public Dealer(VehicleInventory inventory) {
-        this.inventory = inventory;
     }
 
-    public Dealer(List<Contract> contractList) {
-        super(contractList);
-    }
-
-    public Dealer(String account, String password, VehicleInventory inventory) {
-        super(account, password);
-        this.inventory = inventory;
-    }
-
-    public Dealer(String name, String address, String phone, VehicleInventory inventory) {
-        super(name, address, phone);
-        this.inventory = inventory;
-    }
-
-    public Dealer(String account, String password, String name, String address, String phone, VehicleInventory inventory) {
+    public Dealer(String account, String password, String name, String address, String phone) {
         super(account, password, name, address, phone);
-        this.inventory = inventory;
-    }
-
-    public Dealer(String account, String password, String name, String address, String phone, List<Contract> contractList, List<Car> carList, VehicleInventory inventory) {
-        super(account, password, name, address, phone, contractList, carList);
-        this.inventory = inventory;
+        super.setInventory(VehicleInventory.getInstance());
+        super.setContractList(ContractFileManager.getContract());
     }
 }

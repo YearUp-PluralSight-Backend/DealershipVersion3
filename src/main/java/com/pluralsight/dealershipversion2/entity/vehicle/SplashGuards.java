@@ -1,6 +1,6 @@
-package com.pluralsight.dealershipversion2.entity.Car;
+package com.pluralsight.dealershipversion2.entity.vehicle;
 
-public class AllSeaonFloorMats implements AddsOn{
+public class SplashGuards implements AddsOn{
     /**
      * @param car
      */

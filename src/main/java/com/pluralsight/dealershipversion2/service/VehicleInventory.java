@@ -1,7 +1,7 @@
 package com.pluralsight.dealershipversion2.service;
 
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import lombok.Getter;
 
 import java.util.ArrayList;

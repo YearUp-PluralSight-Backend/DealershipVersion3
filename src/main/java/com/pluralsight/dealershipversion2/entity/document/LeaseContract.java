@@ -1,8 +1,6 @@
 package com.pluralsight.dealershipversion2.entity.document;
 
-import com.pluralsight.dealershipversion2.entity.Car.Car;
-import lombok.Getter;
-import lombok.Setter;
+import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 
 /**
  * Represents a lease contract for a car.
