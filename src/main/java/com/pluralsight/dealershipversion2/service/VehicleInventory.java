@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class VehicleInventory {
 
-    private VehicleInventory vehicleInventory;
+    private static VehicleInventory vehicleInventory;
     private final List<Optional<Car>> inventory;
     @Getter
     private int totalOfVehicles;
@@ -19,7 +19,7 @@ public class VehicleInventory {
         this.inventory = new ArrayList<>();
     }
 
-    public VehicleInventory getInstance() {
+    public static VehicleInventory getInstance() {
         if (vehicleInventory != null) {
             return vehicleInventory;
         }

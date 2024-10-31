@@ -189,17 +189,4 @@ public class CustomerGUI {
         printEndingPrompt();
 
     }
-
-    private void processRemoveVehicleById() {
-        loadingAnimation();
-        int vin = promptForInteger("Enter the vin number: ");
-        Car car = carInventory.removeVehicleById(vin);
-        if (car != null) {
-            formatOutput("Your vin number is not correct!");
-        }
-        formatOutput("You have removed vehicle successfully!");
-        printEndingPrompt();
-
-
-    }
 }

@@ -36,14 +36,14 @@ public class DealershipFileManager {
 
 
     public static Dealer getDealer() {
-        VehicleInventory vehicleInventory = new VehicleInventory();
+        VehicleInventory vehicleInventory = VehicleInventory.getInstance();
         List<Car> vehicles = vehicleInventory.getAllVehicles();
         Dealer Dealer = null;
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
 
             String[] firstLineData = bufferedReader.readLine().trim().split("\\|");
-            Dealer = new Dealer(firstLineData[0], firstLineData[1], firstLineData[2], vehicleInventory, null, null);
+            Dealer = new Dealer(firstLineData[0], firstLineData[1], firstLineData[2], );
             String line;
             while ((line = bufferedReader.readLine()) != null) {
 
