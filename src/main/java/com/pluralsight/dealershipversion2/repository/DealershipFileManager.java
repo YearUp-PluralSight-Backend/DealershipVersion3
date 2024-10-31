@@ -13,37 +13,15 @@ public class DealershipFileManager {
 
     private static final String FILE_NAME = "inventory.csv";
 
-    @Getter
-    private static String DealerName;
-
-    @Getter
-    private static String DealerAddress;
-
-    @Getter
-    private static String DealerPhoneNumber;
-
-    public static void getDealerInfo() {
-
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String[] firstLineData = bufferedReader.readLine().trim().split("\\|");
-            firstLineData[0] = DealerName;
-            firstLineData[1] = DealerAddress;
-            firstLineData[2] = DealerPhoneNumber;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public static Dealer getDealer() {
         VehicleInventory vehicleInventory = VehicleInventory.getInstance();
         List<Car> vehicles = vehicleInventory.getAllVehicles();
-        Dealer Dealer = null;
+        Dealer dealer = null;
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
 
             String[] firstLineData = bufferedReader.readLine().trim().split("\\|");
-            Dealer = new Dealer(firstLineData[0], firstLineData[1], firstLineData[2], );
+            dealer = new Dealer(firstLineData[0], firstLineData[1], firstLineData[2], vehicleInventory);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
 
@@ -80,7 +58,7 @@ public class DealershipFileManager {
 
         InputOutput.formatOutput("You have successfully read data from file:  " + FILE_NAME + "\nTotal of vehicles is: " + vehicles.size());
         vehicles.forEach(System.out::println);
-        return Dealer;
+        return dealer;
     }
 
     public static void updateAndSaveDealer(Dealer Dealer) {

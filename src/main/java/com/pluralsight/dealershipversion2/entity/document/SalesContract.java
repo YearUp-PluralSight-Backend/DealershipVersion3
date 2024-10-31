@@ -1,6 +1,8 @@
 package com.pluralsight.dealershipversion2.entity.document;
 
 import com.pluralsight.dealershipversion2.entity.Car.Car;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a sales contract for a car.
@@ -8,9 +10,13 @@ import com.pluralsight.dealershipversion2.entity.Car.Car;
 public class SalesContract extends Contract {
 
     // Constants for sale tax and recording fee
+    @Getter
     private final double SALE_TAX = 0.95;
+    @Getter
     private final double RECORDING_FEE = 100;
+    @Getter
     private double proceesingFee;
+    @Getter
     private boolean isFinance;
 
     /**
