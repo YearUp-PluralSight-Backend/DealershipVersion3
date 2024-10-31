@@ -11,9 +11,9 @@ public class SalesContract extends Contract {
 
     // Constants for sale tax and recording fee
     @Getter
-    private final double SALE_TAX = 0.95;
+    private  double saleTax;
     @Getter
-    private final double RECORDING_FEE = 100;
+    private double recordingFee = 100;
     @Getter
     private double proceesingFee;
     @Getter
@@ -30,8 +30,10 @@ public class SalesContract extends Contract {
      * @param monthlyPayment the monthly payment amount
      * @param isFinance     whether the purchase is financed
      */
-    public SalesContract(String date, String name, String email, Car carSold, double totalPrice, double monthlyPayment, boolean isFinance) {
+    public SalesContract(String date, String name, String email, Car carSold, double saleTax, double recordingFee, double proceesingFee, double totalPrice, boolean isFinance, double monthlyPayment) {
         super(date, name, email, carSold, totalPrice, monthlyPayment);
+        this.saleTax = saleTax * 0.05;
+        this.recordingFee = 100;
         this.proceesingFee = carSold.getPrice() > 10000 ? 495 : 295;
         this.isFinance = isFinance;
     }
@@ -45,6 +47,7 @@ public class SalesContract extends Contract {
         this.isFinance = isFinance;
     }
 
+
     /**
      * Calculates and returns the total price of the contract.
      *
@@ -53,7 +56,7 @@ public class SalesContract extends Contract {
     @Override
     public double getTotalPrice() {
         if (!isFinance) return 0;
-        return carSold.getPrice() >= 10000 ? getMonthlypayment() * 48 : getMonthlypayment() * 24;
+        return carSold.getPrice() >= 10000 ? getMonthlypayment() * 48 + saleTax + recordingFee + proceesingFee: getMonthlypayment() * 24 + saleTax + recordingFee + proceesingFee;
     }
 
     /**
@@ -65,11 +68,18 @@ public class SalesContract extends Contract {
     public double getMonthlypayment() {
         if (!isFinance) return 0;
         double monthlyPayment = 0;
-        if (carSold.getPrice() >= 10000) {
-            monthlyPayment = (carSold.getPrice() * (0.0425 / 12) / Math.pow(1 - (1 + 0.0425 / 12), 48));
-        } else {
-            monthlyPayment = (carSold.getPrice() * (0.0525 / 12) / Math.pow(1 - (1 + 0.0525 / 12), 24));
-        }
+
+        /*
+        P = Loan principal (amount borrowed)
+
+        r = monthly interest rate (as a decimal; e.g., 13% = 0.13 / 12)
+
+        n = Loan term in months (e.g., for a 5-year loan, n=60)
+         */
+        double p = carSold.getPrice();
+        double r = p >= 10000 ? 0.045 / 12: 0.0525 / 12;
+        double n = p >= 10000 ? 48 : 24;
+        monthlyPayment = (p * r) / Math.pow(1 - (1 + r), n);
         return monthlyPayment;
     }
 

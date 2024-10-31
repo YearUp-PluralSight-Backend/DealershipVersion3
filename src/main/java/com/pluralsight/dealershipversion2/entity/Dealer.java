@@ -19,6 +19,10 @@ public class Dealer extends User{
         this.inventory = inventory;
     }
 
+    public Dealer(List<Contract> contractList) {
+        super(contractList);
+    }
+
     public Dealer(String account, String password, VehicleInventory inventory) {
         super(account, password);
         this.inventory = inventory;

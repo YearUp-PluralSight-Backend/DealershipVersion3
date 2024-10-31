@@ -10,13 +10,9 @@ import lombok.Setter;
 public class LeaseContract extends Contract {
 
     // The expected ending value of the car at the end of the lease
-    @Getter
-    @Setter
     private double exceptedEndingValue;
 
     // The fee associated with the lease
-    @Getter
-    @Setter
     private double leaseFee;
 
     /**
@@ -29,16 +25,32 @@ public class LeaseContract extends Contract {
      * @param totalPrice    the total price of the lease
      * @param monthlyPayment the monthly payment amount
      */
-    public LeaseContract(String date, String name, String email, Car carSold, double totalPrice, double monthlyPayment) {
+    public LeaseContract(String date, String name, String email, Car carSold, double exceptedEndingValue, double leaseFee, double totalPrice, double monthlyPayment) {
         super(date, name, email, carSold, totalPrice, monthlyPayment);
-        this.exceptedEndingValue = carSold.getPrice() * 0.5;
-        this.leaseFee = carSold.getPrice() * 0.07;
+        this.exceptedEndingValue = exceptedEndingValue;  // carSold.getPrice() * 0.5;
+        this.leaseFee = leaseFee; // carSold.getPrice() * 0.07;
     }
 
     /**
      * Default constructor for LeaseContract.
      */
     public LeaseContract() {
+    }
+
+    /**
+     *
+     * @return ending value of the vehicle
+     */
+    public double getExceptedEndingValue() {
+        return carSold.getPrice() * 0.5;
+    }
+
+    /**
+     *
+     * @return lease fee
+     */
+    public double getLeaseFee() {
+        return carSold.getPrice() * 0.07;
     }
 
     /**

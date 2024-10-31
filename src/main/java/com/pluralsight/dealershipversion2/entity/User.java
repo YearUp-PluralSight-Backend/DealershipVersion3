@@ -24,6 +24,10 @@ public class User {
     public User() {
     }
 
+    public User(List<Contract> contractList) {
+        this.contractList = contractList;
+    }
+
     public User(String account, String password) {
         this.account = account;
         this.password = password;
