@@ -7,11 +7,9 @@ public class HomeGUI {
 
     private static HomeGUI homeGUI;
     private DealerGUI dealerGUI;
-    private CustomerGUI customerGUI;
 
     private HomeGUI() {
         dealerGUI = DealerGUI.getInstance();
-        customerGUI = CustomerGUI.getInstance();
         homeScreen();
     }
 
@@ -32,8 +30,6 @@ public class HomeGUI {
                 String command = promptForString(" (Dealership) Enter your Option: ").toUpperCase();
                 switch (command) {
                     case "1" -> dealerGUI.homeScreen();                         // Display all vehicles
-                    case "2" -> customerGUI.homeScreen();        // Search by price range
-
                     case "0" -> flag = false;                      // Exit the application
                     default -> System.out.println("Invalid Option. Please choose a number between 1 or 2.\n");
                 }

@@ -54,7 +54,7 @@ public class SalesContract extends Contract {
      */
     @Override
     public double getTotalPrice() {
-        if (!isFinance) return 0;
+        if (!isFinance) return carSold.getPrice() + saleTax  + recordingFee + proceesingFee;
         return carSold.getPrice() >= 10000 ? getMonthlypayment() * 48 + saleTax + recordingFee + proceesingFee: getMonthlypayment() * 24 + saleTax + recordingFee + proceesingFee;
     }
 
