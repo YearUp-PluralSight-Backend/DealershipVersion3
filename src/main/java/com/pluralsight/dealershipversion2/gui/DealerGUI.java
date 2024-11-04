@@ -1,9 +1,12 @@
 package com.pluralsight.dealershipversion2.gui;
 
 
+import com.pluralsight.dealershipversion2.entity.document.LeaseContract;
+import com.pluralsight.dealershipversion2.entity.document.SalesContract;
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
+import com.pluralsight.dealershipversion2.repository.ContractFileManager;
 import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
@@ -59,6 +62,8 @@ public class DealerGUI {
                     case "9" -> processAddVehicle();        // Add a new vehicle
                     case "10" -> processRemoveVehicle();     // Remove a vehicle
                     case "11" -> processRemoveVehicleById();     // Remove a vehicle
+                    case "12" -> sellOrLeaseScreen();
+                    case "13" -> getAllContracts();
 
                     case "0" -> flag = false;                      // Exit the application
                     default -> System.out.println("Invalid Option. Please choose a number between 0 and 10.\n");
@@ -68,6 +73,20 @@ public class DealerGUI {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    private void getAllContracts() {
+        if (contractList.isEmpty()) {
+            System.out.println("Contract list is empty!");
+            return;
+        }
+
+        loadingAnimation();
+        contractList.parallelStream().forEach(System.out::println);
+        endingAnimation();
+
+
 
     }
 
@@ -87,6 +106,9 @@ public class DealerGUI {
                 8. Display all vehicles
                 9. Add a new vehicle to the inventory
                 10. Remove a vehicle from the inventory
+                11. Remove a vehicle from the inventory by vin
+                12. Sell or Lease vehicle
+                13. Show all the contracts
                 0. Exit
                 """.formatted(dealership.getName(), dealership.getAddress(), dealership.getPhone());
 
@@ -99,7 +121,7 @@ public class DealerGUI {
         header();
         carList.forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processGetByPrice(){
@@ -109,7 +131,7 @@ public class DealerGUI {
         header();
         carInventory.getVehiclesByPrice(min, max).forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
 
     }
     public void processGetByMakeModel(){
@@ -119,7 +141,7 @@ public class DealerGUI {
         header();
         carInventory.getVehiclesByMakeModel(make,model).forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processGetByYear(){
@@ -129,7 +151,7 @@ public class DealerGUI {
         header();
         carInventory.getVehiclesByYear(startYear, endYear).forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processGetByColor(){
@@ -139,7 +161,7 @@ public class DealerGUI {
         carInventory.getVehiclesByColor(color).forEach(System.out::println);
         footer(carList);
 
-        printEndingPrompt();
+        endingAnimation();
 
     }
 
@@ -150,7 +172,7 @@ public class DealerGUI {
         header();
         carInventory.getVehiclesByMileage(min, max).forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processGetByVehicleType(){
@@ -159,7 +181,7 @@ public class DealerGUI {
         header();
         carInventory.getVehiclesByType(vehicleType).forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processGetAllVehicle(){
@@ -167,14 +189,14 @@ public class DealerGUI {
         header();
         carList.forEach(System.out::println);
         footer(carList);
-        printEndingPrompt();
+        endingAnimation();
     }
 
     public void processAddVehicle(){
         loadingAnimation();
         Car car = carObject();
         carList.add(car);
-        printEndingPrompt();
+        endingAnimation();
 
     }
 
@@ -187,24 +209,85 @@ public class DealerGUI {
             formatOutput("Your data is not correct!");
         }
         formatOutput("You have removed vehicle successfully!");
-        printEndingPrompt();
+        endingAnimation();
 
     }
 
     private void processRemoveVehicleById() {
+         Car car = null;
         loadingAnimation();
         int vin = promptForInteger("Enter the vin number: ");
         Optional<Car> optionalCar = carInventory.removeVehicleById(vin);
-        optionalCar.ifPresentOrElse(car -> {
-                    formatOutput("You have successfully removed the car from the inventory." + car);
+        optionalCar.ifPresentOrElse(c -> {
+                    formatOutput("You have successfully removed the car from the inventory." + c);
                 },
                 () -> {
                     formatOutput("Your VIN number is not correct!");
                 });
-        printEndingPrompt();
+        endingAnimation();
+    }
 
+    private void sellOrLeaseScreen() {
+
+        boolean flag = true;
+        while (flag) {
+            try {
+                printSellLeaseMenu();  // Display the car dealership menu
+                String command = promptForString(" (Dealership) Enter your Option: ").toUpperCase();
+                switch (command) {
+                    case "1" -> display();                         // Display all vehicles
+                    case "2" -> sellOrLease();                     // Sell or Lease
+                    case "0" -> flag = false;                      // Exit the application
+                    default -> System.out.println("Invalid Option. Please choose a number 0 to 2.\n");
+                }
+            } catch (Exception e) {
+                System.out.println("Wrong command or option!");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void printSellLeaseMenu() {
+        String info =
+                """
+                %s|%s|%s
+                Welcome to the Car Dealership Inventory System
+                Please select an option:
+                1. Display all vehicles
+                2. Sell or Lease
+                0. Exit
+                """.formatted(dealership.getName(), dealership.getAddress(), dealership.getPhone());
+
+        System.out.println(info);
 
     }
 
 
+    private void sellOrLease() {
+
+        loadingAnimation();
+        Contract contract = null;
+        int vin = promptForInteger("Enter the vin number: ");
+        String date = promptForString("Enter the date(YYYYMMDD) :");
+        String customerName = promptForString("Enter your name: ");
+        String address = promptForString("Enter the address:");
+        String s = promptForString("Enter the phone number: ");
+
+        String option = promptForString("Would you like to lease or finance? ");
+
+        if (option.equalsIgnoreCase("lease")) {
+            contract = new LeaseContract(date, customerName, address, carInventory.getVehicleById(vin).get());
+        } else if (option.equalsIgnoreCase("finance")) {
+            contract = new SalesContract(date, customerName, address, carInventory.getVehicleById(vin).get(), true);
+        } else {
+            formatOutput("Invalid option!");
+        }
+
+        if (contract != null) contractList.add(contract);
+        carInventory.removeVehicle(carInventory.getVehicleById(vin).get());
+        DealershipFileManager.updateAndSaveDealer(dealership);
+        ContractFileManager.updateAndSaveDealer(dealership, "inventory.csv");
+
+        endingAnimation();
+    }
 }

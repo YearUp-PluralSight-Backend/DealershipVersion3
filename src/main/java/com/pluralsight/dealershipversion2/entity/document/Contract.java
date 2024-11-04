@@ -8,7 +8,6 @@ import lombok.Setter;
 
 
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class Contract {
 
 
@@ -28,6 +27,22 @@ public abstract class Contract {
     double totalPrice;
     @Setter
     double monthlyPayment;
+
+    public Contract(String date, String name, String email, Car carSold, double totalPrice, double monthlyPayment) {
+        this.date = date;
+        this.name = name;
+        this.email = email;
+        this.carSold = carSold;
+        this.totalPrice = totalPrice;
+        this.monthlyPayment = monthlyPayment;
+    }
+
+    public Contract(String date, String name, String email, Car carSold) {
+        this.date = date;
+        this.name = name;
+        this.email = email;
+        this.carSold = carSold;
+    }
 
     public abstract double getTotalPrice();
     public abstract double getMonthlypayment();

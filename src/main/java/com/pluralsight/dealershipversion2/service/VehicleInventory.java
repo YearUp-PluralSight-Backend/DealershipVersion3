@@ -11,6 +11,7 @@ import java.util.Optional;
 public class VehicleInventory {
 
     private static VehicleInventory vehicleInventory;
+    @Getter
     private final List<Optional<Car>> inventory;
     @Getter
     private int totalOfVehicles;
@@ -117,6 +118,9 @@ public class VehicleInventory {
         totalOfVehicles--;
         return this.inventory.remove(vin);
     }
+
+
+
 
     public void setTotalOfVehicles() {
         this.totalOfVehicles = this.inventory.size();

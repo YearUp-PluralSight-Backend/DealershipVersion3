@@ -36,4 +36,10 @@ public class Dealer extends User {
         super.setInventory(VehicleInventory.getInstance());
         super.setContractList(ContractFileManager.getContract());
     }
+
+
+
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.pluralsight.dealershipversion2.entity.document;
 
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
+import com.pluralsight.dealershipversion2.utils.BankCalculation;
 import lombok.Getter;
 
 /**
@@ -34,6 +35,12 @@ public class SalesContract extends Contract {
         this.saleTax = saleTax * 0.05;
         this.recordingFee = 100;
         this.proceesingFee = carSold.getPrice() > 10000 ? 495 : 295;
+        this.isFinance = isFinance;
+    }
+
+
+    public SalesContract(String date, String name, String email, Car carSold, boolean isFinance) {
+        super(date, name, email, carSold);
         this.isFinance = isFinance;
     }
 
@@ -77,9 +84,10 @@ public class SalesContract extends Contract {
          */
         double p = carSold.getPrice();
         double r = p >= 10000 ? 0.045 / 12: 0.0525 / 12;
-        double n = p >= 10000 ? 48 : 24;
-        monthlyPayment = (p * r) / Math.pow(1 - (1 + r), n);
-        return monthlyPayment;
+        int n = p >= 10000 ? 48 : 24;
+        return BankCalculation.getMonthlyPayment(p, r, n);
+//        monthlyPayment = (p * r) / Math.pow(1 - (1 + r), n);
+//        return monthlyPayment;
     }
 
     /**
@@ -99,10 +107,27 @@ public class SalesContract extends Contract {
     @Override
     public String toString() {
         return String.format(
-                "SALE | %-10s | %-15s | %-15s | %-6d | %-4d | %-10s | %-10s | %-4s | %-10s | %,10d | $%,10.2f | $%,10.2f | $%,10.2f | $%,10.2f | $%,10.2f | %-3s | $%,10.2f",
+                "SALE    | %-10s | %-15s | %-15s | %-6d | %-6d | %-10s | %-10s | %-6s | %-6s | %,10d | $%,.2f | $%,.2f | $%,.2f | $%,.2f | $%,.2f | %-3s | $%,.2f",
                 super.getDate(), super.getName(), super.getEmail(), carSold.getVin(), carSold.getYear(), carSold.getMake(), carSold.getModel(), carSold.getVehicleType(), carSold.getColor(),
                 carSold.getOdometer(), carSold.getPrice(), this.getSaleTax(), this.getRecordingFee(), this.getProceesingFee(), this.getTotalPrice(), this.isFinance(), this.getMonthlypayment()
         );
     }
+
+
+    /**
+     * return a format contract string
+     * @return contract
+     */
+    public String toStringToFile() {
+        return String.format(
+                "SALE|%s|%s|%s|%d|%d|%-10s|%-10s|%-4s|%-10s|%,10d|$%,.2f|$%,.2f|$%,.2f|$%,.2f|$%,.2f|%-3s|$%,.2f",
+                super.getDate(), super.getName(), super.getEmail(), carSold.getVin(), carSold.getYear(),
+                carSold.getMake(), carSold.getModel(), carSold.getVehicleType(), carSold.getColor(),
+                carSold.getOdometer(), carSold.getPrice(), this.getSaleTax(), this.getRecordingFee(),
+                this.getProceesingFee(), this.getTotalPrice(), this.isFinance(), this.getMonthlypayment()
+        );
+    }
+
+
 
 }

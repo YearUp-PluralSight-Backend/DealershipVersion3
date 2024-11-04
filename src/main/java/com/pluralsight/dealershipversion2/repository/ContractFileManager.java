@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class ContractFileManager {
-        private static final String FILE_NAME = "inventory.csv";
+        private static final String FILE_NAME = "contracts.csv";
 
         public static List<Contract> getContract() {
             List<Contract> contractList = new ArrayList<>();
@@ -48,11 +48,11 @@ public class ContractFileManager {
 
 
     public static Contract createContract(String contractDetails) {
+        System.out.println(contractDetails);
         StringTokenizer tokenizer = new StringTokenizer(contractDetails, "|");
         Contract contract = null;
 
         if (!(tokenizer.nextToken().equalsIgnoreCase("SALE"))) {
-            tokenizer.nextToken(); // Skip "LEASE"
 
             String date = tokenizer.nextToken();
             String customerName = tokenizer.nextToken();

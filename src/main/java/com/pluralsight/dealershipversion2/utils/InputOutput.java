@@ -129,7 +129,7 @@ public class InputOutput {
 
 
 
-    public static void printEndingPrompt() {
+    public static void endingAnimation() {
 
         formatOutput("Type enter/return to exit");
         scanner.nextLine();

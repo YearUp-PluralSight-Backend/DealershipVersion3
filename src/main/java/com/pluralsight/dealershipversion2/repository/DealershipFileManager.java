@@ -7,6 +7,7 @@ import com.pluralsight.dealershipversion2.service.VehicleInventory;
 
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 
 public class DealershipFileManager {
 
@@ -14,7 +15,7 @@ public class DealershipFileManager {
 
     public static Dealer getDealer() {
         VehicleInventory vehicleInventory = VehicleInventory.getInstance();
-        List<Car> vehicles = vehicleInventory.getAllVehicles();
+        List<Optional<Car>> vehicles = vehicleInventory.getInventory();
         Dealer dealer = null;
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -46,7 +47,7 @@ public class DealershipFileManager {
                             data[5],
                             Integer.parseInt(data[6]),
                             Double.parseDouble(data[7]));
-                    vehicles.add(vehicle);
+                    vehicles.add(Optional.of(vehicle));
 
                 }
             } catch (FileNotFoundException e) {
@@ -56,7 +57,6 @@ public class DealershipFileManager {
         }
 
         InputOutput.formatOutput("You have successfully read data from file:  " + FILE_NAME + "\nTotal of vehicles is: " + vehicles.size());
-        vehicles.forEach(System.out::println);
         return dealer;
     }
 
