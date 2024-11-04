@@ -1,11 +1,6 @@
 package com.pluralsight.dealershipversion2.entity.vehicle;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
 public class Car {
 
     private int vin;
