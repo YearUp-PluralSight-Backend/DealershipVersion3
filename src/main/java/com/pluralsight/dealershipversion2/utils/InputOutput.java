@@ -4,13 +4,14 @@ package com.pluralsight.dealershipversion2.utils;
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class InputOutput {
 
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     private static final Consumer<String> println = System.out::println;
 
@@ -131,7 +132,7 @@ public class InputOutput {
 
     public static void endingAnimation() {
 
-        formatOutput("Type enter/return to exit");
+        formatOutput("Press enter/return to exit");
         scanner.nextLine();
     }
 
@@ -151,6 +152,7 @@ public class InputOutput {
 
 
     public static Car carObject() {
+
         int vin = promptForInteger("Enter Vehicle Identification Number (VIN): ");
         int year = promptForInteger("Enter the manufacturing year: ");
         String make = promptForString("Enter the make (e. g., Toyota, Honda): ");
@@ -163,17 +165,17 @@ public class InputOutput {
         return new Car(vin, year, make, model, vehicleType, color, odometer, price);
     }
 
-    public static void header() {
+    public static void vehicleHeader() {
         System.out.println();
-        System.out.printf("%-10s %-6s %-15s %-15s %-12s %-10s %-15s %-10s%n",
+        System.out.printf("          %-10s %-6s %-15s %-15s %-12s %-10s %-15s %-10s%n",
                 "VIN", "Year", "Make", "Model", "Type", "Color", "Odometer", "Price");
         System.out.println("----------------------------------------------------------------------------------------------------");
 
     }
 
 
-    public static void footer(List<Car> carList) {
-        double totalValue = carList.stream().mapToDouble(Car::getPrice).sum();
+    public static void vehicleFooter(List<Car> carList) {
+        double totalValue = carList.parallelStream().mapToDouble(car -> car.getPrice()).sum();
         System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.printf("Total Cars: %-10d Total Inventory Value: $%,.2f%n", carList.size(), totalValue);
 

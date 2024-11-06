@@ -82,7 +82,7 @@ public class SalesContract extends Contract {
 
         n = Loan term in months (e.g., for a 5-year loan, n=60)
          */
-        double p = carSold.getPrice();
+        double p = this.carSold.getPrice();
         double r = p >= 10000 ? 0.045 / 12: 0.0525 / 12;
         int n = p >= 10000 ? 48 : 24;
         return BankCalculation.getMonthlyPayment(p, r, n);
@@ -107,7 +107,7 @@ public class SalesContract extends Contract {
     @Override
     public String toString() {
         return String.format(
-                "SALE    | %-10s | %-15s | %-15s | %-6d | %-6d | %-10s | %-10s | %-6s | %-6s | %,10d | $%,.2f | $%,.2f | $%,.2f | $%,.2f | $%,.2f | %-3s | $%,.2f",
+                "SALE    | %-10s | %-15s | %-20s | %-6d | %-6d | %-10s | %-10s | %-6s | %-6s | %,10d | $%,.1f | $%,.1f | $%,.1f | $%,.1f | $%,.1f | %-3s | $%,.1f",
                 super.getDate(), super.getName(), super.getEmail(), carSold.getVin(), carSold.getYear(), carSold.getMake(), carSold.getModel(), carSold.getVehicleType(), carSold.getColor(),
                 carSold.getOdometer(), carSold.getPrice(), this.getSaleTax(), this.getRecordingFee(), this.getProceesingFee(), this.getTotalPrice(), this.isFinance(), this.getMonthlypayment()
         );

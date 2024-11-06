@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Getter
 public class VehicleInventory {
 
     private static VehicleInventory vehicleInventory;
-    @Getter
-    private final List<Optional<Car>> inventory;
-    @Getter
+    private final List<Car> inventory;
     private int totalOfVehicles;
 
     private VehicleInventory() {
@@ -30,8 +29,6 @@ public class VehicleInventory {
 
     public List<Car> getVehiclesByPrice(double min, double max) {
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get) // Get the Car from Optional
                 .filter(car -> car.getPrice() >= min && car.getPrice() <= max) // Filter by price range
                 .toList(); // Collect to list
     }
@@ -40,8 +37,6 @@ public class VehicleInventory {
     public List<Car> getVehiclesByMakeModel(String make, String model) {
         // Implementation here
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(vehicle -> vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model))
                 .toList();
     }
@@ -50,8 +45,6 @@ public class VehicleInventory {
     public List<Car> getVehiclesByYear(int min, int max) {
         // Implementation here
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(vehicle -> vehicle.getYear() >= min && vehicle.getYear() <= max)
                 .toList();
     }
@@ -60,8 +53,6 @@ public class VehicleInventory {
     public List<Car> getVehiclesByColor(String color) {
         // Implementation here
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(vehicle -> vehicle.getColor().equalsIgnoreCase(color))
                 .toList();
     }
@@ -71,8 +62,6 @@ public class VehicleInventory {
         // Implementation here
 
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(vehicle -> vehicle.getOdometer() >= min && vehicle.getOdometer() <= max)
                 .toList();
     }
@@ -81,8 +70,6 @@ public class VehicleInventory {
     public List<Car> getVehiclesByType(String vehicleType) {
         // Implementation here
         return this.inventory.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(vehicle -> vehicle.getVehicleType().equalsIgnoreCase(vehicleType))
                 .toList();
     }
@@ -90,19 +77,20 @@ public class VehicleInventory {
     // Method to get all vehicles in inventory
     public List<Car>  getAllVehicles() {
         // Implementation here
-        return this.inventory.stream().filter(Optional::isPresent).map(Optional::get).toList();
+        return this.inventory;
     }
 
     // Method to add a vehicle to the inventory
     public boolean addVehicle(Car vehicle) {
         // Implementation here
         totalOfVehicles++;
-        return this.inventory.add(Optional.of(vehicle));
+        return this.inventory.add(vehicle);
 
     }
 
     public Optional<Car> getVehicleById(int id) {
-        return this.inventory.get(id);
+
+        return inventory.stream().filter(car -> car.getVin() == id).findFirst();
     }
 
 
@@ -113,18 +101,17 @@ public class VehicleInventory {
         return this.inventory.remove(vehicle);
     }
 
-    public Optional<Car> removeVehicleById(int vin) {
+    public boolean removeVehicleById(int vin) {
         // Implementation here
         totalOfVehicles--;
-        return this.inventory.remove(vin);
+
+        Car car = inventory.stream().filter(c -> c.getVin() == vin).limit(1).findFirst().get();
+
+        return this.inventory.remove(car);
     }
-
-
-
 
     public void setTotalOfVehicles() {
         this.totalOfVehicles = this.inventory.size();
     }
-
 
 }

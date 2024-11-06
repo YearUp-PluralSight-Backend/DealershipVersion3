@@ -70,7 +70,11 @@ public class LeaseContract extends Contract {
      */
     @Override
     public double getTotalPrice() {
-        return getMonthlypayment() * 36;
+        double res = getMonthlypayment() * 36;
+        BigDecimal result = BigDecimal.valueOf(res);
+        BigDecimal roundResult = result.setScale(2, RoundingMode.HALF_UP);
+        return roundResult.doubleValue();
+
     }
 
     /**
@@ -81,10 +85,18 @@ public class LeaseContract extends Contract {
     @Override
     public double getMonthlypayment() {
 
-        double p = carSold.getPrice();
+        double p = this.carSold.getPrice();
         double r = 0.04 / 12;
         int n = 36;
-        return BankCalculation.getMonthlyPayment(p, r, n);
+        double result = BankCalculation.getMonthlyPayment(p, r, n);
+        double res = BigDecimal.valueOf(result).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        return res;
+// 7.0700000
+// 7.07
+// "7.070000"
+// "7.07"
+       // String.format()
+
 
 //        BigDecimal p = BigDecimal.valueOf(carSold.getPrice());
 //        BigDecimal r = BigDecimal.valueOf(0.04 / 12);
@@ -101,7 +113,7 @@ public class LeaseContract extends Contract {
     @Override
     public String toString() {
         return String.format(
-                "LEASE   | %-10s | %-15s | %-15s | %-6s | %-6s | %-10s | %-10s | %-6s | %-6s | %,10d | $%,.2f | $%,.2f | $%,.2f | $%,.2f | $%,.2f",
+                "LEASE   | %-10s | %-15s | %-20s | %-6s | %-6s | %-10s | %-10s | %-6s | %-6s | %,10d | $%,.1f | $%,.1f | $%,.1f | $%,.1f | $%,.1f",
                 super.getDate(), super.getName(), super.getEmail(), carSold.getVin(), carSold.getYear(),
                 carSold.getMake(), carSold.getModel(), carSold.getVehicleType(), carSold.getColor(),
                 carSold.getOdometer(), carSold.getPrice(), this.exceptedEndingValue, this.leaseFee,

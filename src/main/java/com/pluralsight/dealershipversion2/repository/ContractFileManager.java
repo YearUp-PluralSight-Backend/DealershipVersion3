@@ -42,7 +42,7 @@ public class ContractFileManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            InputOutput.formatOutput("You have successfully update data and save from file:  " + FILE_NAME + "\nTotal of vehicles is: " + contractList.size());
+            InputOutput.formatOutput("You have successfully updated data and saved it to:  " + FILE_NAME + "\nTotal of vehicles is: " + contractList.size());
 
         }
 
