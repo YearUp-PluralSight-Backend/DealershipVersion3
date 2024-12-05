@@ -4,7 +4,6 @@ package com.pluralsight.dealershipversion2.utils;
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Consumer;
 

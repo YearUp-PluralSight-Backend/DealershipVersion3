@@ -1,7 +1,5 @@
 package com.pluralsight.dealershipversion2.service.commandpattern;
 
-import com.pluralsight.dealershipversion2.entity.Dealer;
-
 import java.util.Stack;
 
 public class Dealership {

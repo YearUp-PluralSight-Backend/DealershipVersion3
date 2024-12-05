@@ -4,15 +4,11 @@ package com.pluralsight.dealershipversion2.gui;
 import com.pluralsight.dealershipversion2.entity.document.LeaseContract;
 import com.pluralsight.dealershipversion2.entity.document.SalesContract;
 import com.pluralsight.dealershipversion2.entity.vehicle.Car;
-import com.pluralsight.dealershipversion2.entity.Dealer;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
-import com.pluralsight.dealershipversion2.repository.ContractFileManager;
-import com.pluralsight.dealershipversion2.repository.DealershipFileManager;
 import com.pluralsight.dealershipversion2.service.VehicleInventory;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.pluralsight.dealershipversion2.utils.InputOutput.*;
 
