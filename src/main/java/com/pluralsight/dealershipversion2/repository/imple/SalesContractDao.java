@@ -1,5 +1,6 @@
 package com.pluralsight.dealershipversion2.repository.imple;
 
+import com.pluralsight.dealershipversion2.config.DataBase;
 import com.pluralsight.dealershipversion2.entity.document.Contract;
 import com.pluralsight.dealershipversion2.repository.CRUDOperation;
 import com.pluralsight.dealershipversion2.repository.ContractRepository;
@@ -9,6 +10,15 @@ import java.util.Optional;
 
 public class ContractDao implements ContractRepository, CRUDOperation<Contract> {
 
+    private final DataBase dataBase;
+
+    public ContractDao(DataBase dataBase) {
+        this.dataBase = dataBase;
+    }
+
+    public static ContractDao getInstance() {
+        return new ContractDao(DataBase.getInstance());
+    }
 
     /**
      * @param contract
